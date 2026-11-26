@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- Datenschutz: Die Seite darf keinerlei Verbindungen nach außen aufbauen. -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' blob: data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Scan">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#f4f4f1">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <title>Scan</title>
+</head>
+<body>
+  <!-- Startseite: Seitenliste -->
+  <section id="home" class="screen active">
+    <header class="bar">
+      <h1>Scan</h1>
+      <button id="btn-clear" class="link" hidden>Alle löschen</button>
+    </header>
+    <main class="home-main">
+      <p id="empty" class="empty">
+        Fotografiere ein Dokument.<br>
+        Alles bleibt auf deinem Gerät.
+      </p>
+      <ol id="pages" class="pages"></ol>
+    </main>
+    <footer class="actions">
+      <label class="btn">
+        <input id="in-camera" type="file" accept="image/*" capture="environment" hidden>
+        Kamera
+      </label>
+      <label class="btn secondary">
+        <input id="in-library" type="file" accept="image/*" multiple hidden>
+        Fotos
+      </label>
+      <button id="btn-export" class="btn primary" disabled>PDF</button>
+    </footer>
+  </section>
+
+  <!-- Ecken anpassen -->
+  <section id="editor" class="screen">
+    <header class="bar">
+      <button id="ed-cancel" class="link">Abbrechen</button>
+      <h1>Ecken</h1>
+      <button id="ed-next" class="link strong">Weiter</button>
+    </header>
+    <div class="stage"><canvas id="ed-canvas"></canvas></div>
+    <footer class="actions">
+      <button id="ed-auto" class="btn secondary">Automatisch</button>
+      <button id="ed-full" class="btn secondary">Ganzes Bild</button>
+    </footer>
+  </section>
+
+  <!-- Schwarz-Weiß-Vorschau -->
+  <section id="result" class="screen">
+    <header class="bar">
+      <button id="rs-back" class="link">Ecken</button>
+      <h1>Vorschau</h1>
+      <button id="rs-ok" class="link strong">Fertig</button>
+    </header>
+    <div class="stage"><canvas id="rs-canvas" class="paper"></canvas></div>
+    <footer class="actions column">
+      <div class="slider">
+        <span>Heller</span>
+        <input id="rs-sens" type="range" min="0" max="100" value="35">
+        <span>Kräftiger</span>
+      </div>
+      <button id="rs-rotate" class="btn secondary">Drehen ↻</button>
+    </footer>
+  </section>
+
+  <!-- Export -->
+  <dialog id="export">
+    <form method="dialog" class="export-form">
+      <h2>PDF erstellen</h2>
+      <label class="field">Dateiname
+        <input id="ex-name" type="text" autocomplete="off" spellcheck="false">
+      </label>
+      <p id="ex-info" class="muted"></p>
+      <button id="ex-make" type="button" class="btn primary">PDF erstellen</button>
+      <button id="ex-share" type="button" class="btn primary" hidden>Teilen / In Dateien sichern</button>
+      <a id="ex-download" class="btn secondary" hidden>Herunterladen</a>
+      <button id="ex-close" type="button" class="btn secondary">Schließen</button>
+    </form>
+  </dialog>
+
+  <div id="busy" class="busy" hidden><div class="spinner"></div><p id="busy-text">Wird verarbeitet …</p></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
